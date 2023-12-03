@@ -1,23 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useCallback } from "react";
+
+import Counter from "./components/Counter";
+import CounterButton from "./components/CounterButton";
+import SetCounter from "./components/SetCounter";
 
 function App() {
+  console.log("APP RENDERED");
+  const [count, setCount] = useState(0);
+
+  const handleIncrement = useCallback(() => {
+    setCount((prev) => prev + 1);
+  }, []);
+
+  const handleDecrement = useCallback(() => {
+    setCount((prev) => prev - 1);
+  }, []);
+
+  const handleSetCount = (newCount) => {
+    setCount(newCount);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Counter count={count} />
+      <CounterButton onButtonClick={handleIncrement}>Increase</CounterButton>
+      <CounterButton onButtonClick={handleDecrement}>Decrease</CounterButton>
+      <SetCounter onSet={handleSetCount} />
+
+      <SetCounter onSet={handleSetCount} />
     </div>
   );
 }
